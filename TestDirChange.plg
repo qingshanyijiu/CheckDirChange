@@ -6,45 +6,45 @@
 --------------------Configuration: TestDirChange - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Debug/TestDirChange.res" /d "_DEBUG" /d "_AFXDLL" "F:\MyProject\TestDirChange\TestDirChange.rc"" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPC25A.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/TestDirChange.res" /d "_DEBUG" /d "_AFXDLL" "F:\MyProject\TestDirChange\TestDirChange\TestDirChange.rc"" 
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPB915.tmp" with contents
 [
-/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/TestDirChange.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ   /c 
-"F:\MyProject\TestDirChange\TestDirChange.cpp"
-"F:\MyProject\TestDirChange\TestDirChangeDlg.cpp"
-"F:\MyProject\TestDirChange\CheckDirChange.cpp"
-"F:\MyProject\TestDirChange\ChangeFileManage.cpp"
-"F:\MyProject\TestDirChange\CriticalLock.cpp"
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/TestDirChange.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"F:\MyProject\TestDirChange\TestDirChange\ChangeFileManage.cpp"
+"F:\MyProject\TestDirChange\TestDirChange\CheckDirChange.cpp"
+"F:\MyProject\TestDirChange\TestDirChange\CriticalLock.cpp"
+"F:\MyProject\TestDirChange\TestDirChange\TestDirChange.cpp"
+"F:\MyProject\TestDirChange\TestDirChange\TestDirChangeDlg.cpp"
 ]
-Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPC25A.tmp" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPC25B.tmp" with contents
+Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPB915.tmp" 
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPB916.tmp" with contents
 [
-/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/TestDirChange.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ   /c 
-"F:\MyProject\TestDirChange\StdAfx.cpp"
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/TestDirChange.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"F:\MyProject\TestDirChange\TestDirChange\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPC25B.tmp" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPC25C.tmp" with contents
+Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPB916.tmp" 
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPB917.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/TestDirChange.pdb" /debug /machine:I386 /out:"Debug/TestDirChange.exe" /pdbtype:sept 
+.\Debug\ChangeFileManage.obj
+.\Debug\CheckDirChange.obj
+.\Debug\CriticalLock.obj
+.\Debug\StdAfx.obj
 .\Debug\TestDirChange.obj
 .\Debug\TestDirChangeDlg.obj
-.\Debug\StdAfx.obj
 .\Debug\TestDirChange.res
-.\Debug\CheckDirChange.obj
-.\Debug\ChangeFileManage.obj
-.\Debug\CriticalLock.obj
 ]
-Creating command line "link.exe @C:\Users\K1375\AppData\Local\Temp\RSPC25C.tmp"
+Creating command line "link.exe @C:\Users\K1375\AppData\Local\Temp\RSPB917.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
 StdAfx.cpp
 Compiling...
+ChangeFileManage.cpp
+CheckDirChange.cpp
+CriticalLock.cpp
 TestDirChange.cpp
 TestDirChangeDlg.cpp
-CheckDirChange.cpp
-ChangeFileManage.cpp
-CriticalLock.cpp
 Generating Code...
 Linking...
 

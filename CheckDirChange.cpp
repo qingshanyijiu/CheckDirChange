@@ -96,7 +96,7 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 									&overlapped,
 									NULL))
 		{
-				break;
+			break;
 		}
 
 		dwWait = WaitForMultipleObjects(2,hWaitEvent,FALSE,INFINITE);
@@ -110,6 +110,7 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 		}
 	}
 
+	CloseHandle(overlapped.hEvent);
 
 	return 0;
 }
