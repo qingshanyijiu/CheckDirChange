@@ -21,7 +21,7 @@ public:
 	virtual ~CChangeFileManage();
 
 	void Init();
-	void AddItem(const char* lpFileName);
+	void AddItem(const char* lpFileName,const char* lpNoteText="");
 	void Stop();
 
 protected:
@@ -32,6 +32,7 @@ protected:
 	HANDLE				m_hThread;
 	HANDLE				m_hSignal[2];
 	list<string>		m_fileNameList;
+	list<string>		m_noteList;
 	CCriticalLock		m_csLock;
 	int					m_nFileNum;
 };

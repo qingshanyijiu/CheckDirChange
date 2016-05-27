@@ -137,8 +137,8 @@ BOOL CTestDirChangeDlg::OnInitDialog()
 	m_showList.SetExtendedStyle(dwStyle); //设置扩展风格
 
 	m_showList.InsertColumn( 0, "Num", LVCFMT_LEFT, 50 );
-	m_showList.InsertColumn( 1, "Name", LVCFMT_LEFT, 300 );
-
+	m_showList.InsertColumn( 1, "Name", LVCFMT_LEFT, 100 );
+	m_showList.InsertColumn( 2, "Note", LVCFMT_LEFT, 300 );
 	SetDlgItemText(IDC_EDIT_Path,"D:\\TestCheck");
 
 	
@@ -249,18 +249,19 @@ void CTestDirChangeDlg::OnBUTTONSelDir()
 }
 
 
-void CTestDirChangeDlg::InsertItem(int iNum,const char* lpName)
+void CTestDirChangeDlg::InsertItem(int iNum,const char* lpName,const char* lpNote)
 {
-	g_pThis->AddItem(iNum,lpName);
+	g_pThis->AddItem(iNum,lpName,lpNote);
 }
 
-void CTestDirChangeDlg::AddItem(int iNum,const char* lpName)
+void CTestDirChangeDlg::AddItem(int iNum,const char* lpName,const char* lpNote)
 {
 	char csTemp[10] = {0};
 
 	sprintf(csTemp,"%d",iNum);
 	int nRow = m_showList.InsertItem(m_showList.GetItemCount(),csTemp);//插入行;
 	m_showList.SetItemText(nRow,1,lpName);
+	m_showList.SetItemText(nRow,2,lpNote);
 }
 
 void CTestDirChangeDlg::ClearItem()
