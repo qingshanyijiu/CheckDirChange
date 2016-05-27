@@ -189,12 +189,9 @@ void CCheckDirChange::AnalyDirChangeEvent(PFILE_NOTIFY_INFORMATION pFileNotify)
 
 void CCheckDirChange::CheckAddedFile(PFILE_NOTIFY_INFORMATION pFileNotify)
 {
-    TCHAR      szFileName[MAX_PATH]={0};
-	char	   csFileFullNames[MAX_PATH]={0};
-	
-    memcpy( szFileName, pFileNotify->FileName ,pFileNotify->FileNameLength);
-    szFileName[pFileNotify->FileNameLength/sizeof(TCHAR)]=0;
+	memset(m_szFileName,0,MAX_PATH*sizeof(TCHAR));
+	memcpy( m_szFileName, pFileNotify->FileName ,pFileNotify->FileNameLength);
 
-	::WideCharToMultiByte(CP_ACP,0,(LPCWSTR)szFileName, pFileNotify->FileNameLength, csFileFullNames, MAX_PATH,NULL,NULL); 
-	m_changeFile.AddItem(csFileFullNames);
+	::WideCharToMultiByte(CP_ACP,0,(unsigned short*)m_szFileName, pFileNotify->FileNameLength, m_csFileFullNames, MAX_PATH,NULL,NULL); 
+	m_changeFile.AddItem(m_csFileFullNames);
 }

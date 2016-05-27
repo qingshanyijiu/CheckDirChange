@@ -32,6 +32,10 @@ protected:
 	HANDLE					m_hExitEvent;
 	CChangeFileManage		m_changeFile;
 	char					m_filePath[MAX_PATH];
+	
+protected:
+	char				m_csFileFullNames[MAX_PATH];
+	TCHAR				m_szFileName[MAX_PATH];
 };
 
 #endif // !defined(AFX_CHECKDIRCHANGE_H__2F84F82F_A635_4A40_8F7C_F6B5999D36B0__INCLUDED_)
