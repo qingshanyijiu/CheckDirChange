@@ -107,5 +107,5 @@ void CChangeFileManage::DisposeOneMsg()
 
 	CCriticalLock::CAutoLock lock(m_csLock);
 	m_fileNameList.pop_front();
-	m_noteList.pop_back();
+	m_noteList.pop_front();
 }

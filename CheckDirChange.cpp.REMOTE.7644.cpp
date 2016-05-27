@@ -90,8 +90,8 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 		if (!ReadDirectoryChangesW(pThis->m_hDirectory,
 									pFileNotification,
 									dwMaxBufferLen,
-									TRUE,
-									FILE_NOTIFY_CHANGE_FILE_NAME|FILE_NOTIFY_CHANGE_LAST_WRITE|FILE_NOTIFY_CHANGE_DIR_NAME, 
+									FALSE,
+									FILE_NOTIFY_CHANGE_FILE_NAME|FILE_NOTIFY_CHANGE_LAST_WRITE, 
 									&dwReturnLen,
 									&overlapped,
 									NULL))
@@ -130,8 +130,8 @@ bool CCheckDirChange::OpenDirectory(const char* lpDirPath)
 
 void CCheckDirChange::AnalyDirChangeEvent(PFILE_NOTIFY_INFORMATION pFileNotify)
 {
-    /*DWORD cbOffset;
-	
+    DWORD cbOffset;
+
 	do 
 	{
 		cbOffset = pFileNotify->NextEntryOffset;
@@ -141,57 +141,14 @@ void CCheckDirChange::AnalyDirChangeEvent(PFILE_NOTIFY_INFORMATION pFileNotify)
 		
 		pFileNotify = (PFILE_NOTIFY_INFORMATION)((LPBYTE) pFileNotify + cbOffset);
 
-     } while( cbOffset );*/
-	DWORD cbOffset;
-	bool bContinue = true;
-	char      szFileName[MAX_PATH]={0};
-	char	   csFileFullNames[MAX_PATH]={0};
-	char	   tempText[255]={0};
-	char Note[256]={0};
-	bool NeedSendMsg = false;
-	do 
-	{
-		cbOffset = pFileNotify->NextEntryOffset;
-		switch(pFileNotify->Action)
-		{
-		case FILE_ACTION_ADDED:
-			::WideCharToMultiByte(CP_ACP,0,pFileNotify->FileName, pFileNotify->FileNameLength, csFileFullNames, MAX_PATH,NULL,NULL); 
-			strcpy(Note,"Directory/File Add");
-			bContinue = false;
-			NeedSendMsg=true;
-			break;
-		case FILE_ACTION_REMOVED:
-			::WideCharToMultiByte(CP_ACP,0,pFileNotify->FileName, pFileNotify->FileNameLength, csFileFullNames, MAX_PATH,NULL,NULL); 
-			strcpy(Note,"Directory/File Remove");
-			bContinue = false;
-			NeedSendMsg=true;
-			break;
-		case FILE_ACTION_RENAMED_OLD_NAME:
-			::WideCharToMultiByte(CP_ACP,0,pFileNotify->FileName, pFileNotify->FileNameLength, szFileName, 255,NULL,NULL);
-			strcpy(Note,"Directory/File Rename ");
-			strcat(Note,szFileName);
-			bContinue = true;
-			break;
-		case FILE_ACTION_RENAMED_NEW_NAME:
-			::WideCharToMultiByte(CP_ACP,0,pFileNotify->FileName, pFileNotify->FileNameLength, csFileFullNames, MAX_PATH,NULL,NULL); 
-			bContinue = false;
-			NeedSendMsg = true;
-			break;
-		default:
-			bContinue = false;
-			break;
-		}
-		pFileNotify = (PFILE_NOTIFY_INFORMATION)((LPBYTE) pFileNotify + cbOffset);
-	} while (cbOffset&&bContinue);
-	if(NeedSendMsg)
-		m_changeFile.AddItem(csFileFullNames,Note);
+     } while( cbOffset );
 }
 
 void CCheckDirChange::CheckAddedFile(PFILE_NOTIFY_INFORMATION pFileNotify)
 {
-	/*memset(m_szFileName,0,MAX_PATH*sizeof(TCHAR));
+	memset(m_szFileName,0,MAX_PATH*sizeof(TCHAR));
 	memcpy( m_szFileName, pFileNotify->FileName ,pFileNotify->FileNameLength);
 
 	::WideCharToMultiByte(CP_ACP,0,(unsigned short*)m_szFileName, pFileNotify->FileNameLength, m_csFileFullNames, MAX_PATH,NULL,NULL); 
-	m_changeFile.AddItem(m_csFileFullNames);*/
+	m_changeFile.AddItem(m_csFileFullNames);
 }
