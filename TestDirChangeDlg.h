@@ -19,10 +19,10 @@ public:
 	CTestDirChangeDlg(CWnd* pParent = NULL);	// standard constructor
 
 public:
-	static	void InsertItem(int iNum,const char* lpName,const char* lpNote);
+	static	void InsertItem(int iNum,PFileInfo pInfo);
 	
 protected:
-	void AddItem(int iNum,const char* lpName,const char* lpNote);
+	void AddItem(int iNum,PFileInfo pInfo);
 	void ClearItem();
 	
 protected:

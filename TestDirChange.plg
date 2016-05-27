@@ -6,24 +6,7 @@
 --------------------Configuration: TestDirChange - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Debug/TestDirChange.res" /d "_DEBUG" /d "_AFXDLL" "F:\MyProject\TestDirChange\TestDirChange\TestDirChange.rc"" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPB915.tmp" with contents
-[
-/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/TestDirChange.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"F:\MyProject\TestDirChange\TestDirChange\ChangeFileManage.cpp"
-"F:\MyProject\TestDirChange\TestDirChange\CheckDirChange.cpp"
-"F:\MyProject\TestDirChange\TestDirChange\CriticalLock.cpp"
-"F:\MyProject\TestDirChange\TestDirChange\TestDirChange.cpp"
-"F:\MyProject\TestDirChange\TestDirChange\TestDirChangeDlg.cpp"
-]
-Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPB915.tmp" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPB916.tmp" with contents
-[
-/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/TestDirChange.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"F:\MyProject\TestDirChange\TestDirChange\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPB916.tmp" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPB917.tmp" with contents
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP9E07.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/TestDirChange.pdb" /debug /machine:I386 /out:"Debug/TestDirChange.exe" /pdbtype:sept 
 .\Debug\ChangeFileManage.obj
@@ -34,18 +17,8 @@ Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPB917.tmp" with con
 .\Debug\TestDirChangeDlg.obj
 .\Debug\TestDirChange.res
 ]
-Creating command line "link.exe @C:\Users\K1375\AppData\Local\Temp\RSPB917.tmp"
+Creating command line "link.exe @C:\Users\K1375\AppData\Local\Temp\RSP9E07.tmp"
 <h3>Output Window</h3>
-Compiling resources...
-Compiling...
-StdAfx.cpp
-Compiling...
-ChangeFileManage.cpp
-CheckDirChange.cpp
-CriticalLock.cpp
-TestDirChange.cpp
-TestDirChangeDlg.cpp
-Generating Code...
 Linking...
 
 

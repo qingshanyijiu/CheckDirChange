@@ -45,12 +45,11 @@ void CChangeFileManage::Init()
 	}
 }
 
-void CChangeFileManage::AddItem(const char* lpFileName,const char* lpNoteText)
+void CChangeFileManage::AddItem(const char* lpFileName,DWORD dwAction)
 {
 	{
 		CCriticalLock::CAutoLock	lock(m_csLock);
-		m_fileNameList.push_back(lpFileName);
-		m_noteList.push_back(lpNoteText);
+		m_fileNameList.push_back(FileInfo(dwAction,lpFileName));
 	}
 
 	ReleaseSemaphore(m_hSignal[1],1,NULL);
@@ -99,13 +98,11 @@ UINT __stdcall	CChangeFileManage::DisposeMsgInfo(LPVOID lpParam)
 
 void CChangeFileManage::DisposeOneMsg()
 {
-	string&	strName = m_fileNameList.front();
-	string& strNote = m_noteList.front();
+	FileInfo&	fileInfo = m_fileNameList.front();
 
 	++m_nFileNum;
-	CTestDirChangeDlg::InsertItem(m_nFileNum,strName.c_str(),strNote.c_str());
+	CTestDirChangeDlg::InsertItem(m_nFileNum,&fileInfo);
 
 	CCriticalLock::CAutoLock lock(m_csLock);
 	m_fileNameList.pop_front();
-	m_noteList.pop_front();
 }

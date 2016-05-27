@@ -249,19 +249,36 @@ void CTestDirChangeDlg::OnBUTTONSelDir()
 }
 
 
-void CTestDirChangeDlg::InsertItem(int iNum,const char* lpName,const char* lpNote)
+void CTestDirChangeDlg::InsertItem(int iNum,PFileInfo pInfo)
 {
-	g_pThis->AddItem(iNum,lpName,lpNote);
+	g_pThis->AddItem(iNum,pInfo);
 }
 
-void CTestDirChangeDlg::AddItem(int iNum,const char* lpName,const char* lpNote)
+void CTestDirChangeDlg::AddItem(int iNum,PFileInfo pInfo)
 {
 	char csTemp[10] = {0};
 
 	sprintf(csTemp,"%d",iNum);
 	int nRow = m_showList.InsertItem(m_showList.GetItemCount(),csTemp);//²åÈëÐÐ;
-	m_showList.SetItemText(nRow,1,lpName);
-	m_showList.SetItemText(nRow,2,lpNote);
+	m_showList.SetItemText(nRow,1,pInfo->strFileName.c_str());
+	switch(pInfo->dwAction)
+	{
+	case FILE_ACTION_ADDED:
+		m_showList.SetItemText(nRow,2,"File Added");
+		break;
+	case FILE_ACTION_REMOVED:
+		m_showList.SetItemText(nRow,2,"File Removed");
+		break;
+	case FILE_ACTION_MODIFIED: 
+		m_showList.SetItemText(nRow,2,"File Modified");
+		break;
+	case FILE_ACTION_RENAMED_OLD_NAME:
+		m_showList.SetItemText(nRow,2,"File Rename old");
+		break;
+	case FILE_ACTION_RENAMED_NEW_NAME:
+		m_showList.SetItemText(nRow,2,"File Rename new");
+		break;
+	}
 }
 
 void CTestDirChangeDlg::ClearItem()

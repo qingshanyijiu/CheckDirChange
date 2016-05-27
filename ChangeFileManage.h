@@ -14,6 +14,18 @@
 #include <list>
 using namespace std;
 
+typedef struct tagFileInfo
+{
+	DWORD	dwAction;
+	string  strFileName;
+
+	tagFileInfo(DWORD dwaction,const char* lpName){
+		dwAction = dwaction;
+		strFileName = lpName;
+	}
+
+}FileInfo,*PFileInfo;
+
 class CChangeFileManage  
 {
 public:
@@ -21,7 +33,7 @@ public:
 	virtual ~CChangeFileManage();
 
 	void Init();
-	void AddItem(const char* lpFileName,const char* lpNoteText="");
+	void AddItem(const char* lpFileName,DWORD dwAction);
 	void Stop();
 
 protected:
@@ -31,8 +43,7 @@ protected:
 protected:
 	HANDLE				m_hThread;
 	HANDLE				m_hSignal[2];
-	list<string>		m_fileNameList;
-	list<string>		m_noteList;
+	list<FileInfo>		m_fileNameList;
 	CCriticalLock		m_csLock;
 	int					m_nFileNum;
 
