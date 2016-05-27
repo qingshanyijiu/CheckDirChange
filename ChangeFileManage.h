@@ -34,6 +34,7 @@ protected:
 	list<string>		m_fileNameList;
 	CCriticalLock		m_csLock;
 	int					m_nFileNum;
+
 };
 
 #endif // !defined(AFX_CHANGEFILEMANAGE_H__E65DDA3E_26F8_42E2_B56D_15555541EF95__INCLUDED_)
