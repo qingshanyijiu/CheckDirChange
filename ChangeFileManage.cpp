@@ -45,6 +45,11 @@ void CChangeFileManage::Init()
 	}
 }
 
+void CChangeFileManage::Start()
+{
+	m_nFileNum = 0;
+}
+
 void CChangeFileManage::AddItem(const char* lpFileName,DWORD dwAction)
 {
 	{

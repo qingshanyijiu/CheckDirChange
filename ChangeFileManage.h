@@ -33,6 +33,7 @@ public:
 	virtual ~CChangeFileManage();
 
 	void Init();
+	void Start();
 	void AddItem(const char* lpFileName,DWORD dwAction);
 	void Stop();
 

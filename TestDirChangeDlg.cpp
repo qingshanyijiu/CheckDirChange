@@ -141,6 +141,8 @@ BOOL CTestDirChangeDlg::OnInitDialog()
 	m_showList.InsertColumn( 2, "Note", LVCFMT_LEFT, 300 );
 	SetDlgItemText(IDC_EDIT_Path,"D:\\TestCheck");
 
+	m_dirChange.Init();
+
 	
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -202,7 +204,7 @@ void CTestDirChangeDlg::OnBUTTONBegin()
 	GetDlgItemText(IDC_EDIT_Path,strPath);
 
 	ClearItem();
-	m_dirChange.Init(strPath.operator LPCTSTR());
+	m_dirChange.StartCheck(strPath.operator LPCTSTR());
 
 }
 
