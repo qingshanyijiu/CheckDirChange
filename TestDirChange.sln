@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDirChange", "TestDirChange.vcxproj", "{85776C48-E70B-3D57-A1DC-4649B4535471}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDirChange", "TestDirChange.vcxproj", "{A2AF526C-C5DF-9282-DCC4-8A581E3383B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{85776C48-E70B-3D57-A1DC-4649B4535471}.Debug|Win32.ActiveCfg = Debug|Win32
-		{85776C48-E70B-3D57-A1DC-4649B4535471}.Debug|Win32.Build.0 = Debug|Win32
-		{85776C48-E70B-3D57-A1DC-4649B4535471}.Release|Win32.ActiveCfg = Release|Win32
-		{85776C48-E70B-3D57-A1DC-4649B4535471}.Release|Win32.Build.0 = Release|Win32
+		{A2AF526C-C5DF-9282-DCC4-8A581E3383B5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A2AF526C-C5DF-9282-DCC4-8A581E3383B5}.Debug|Win32.Build.0 = Debug|Win32
+		{A2AF526C-C5DF-9282-DCC4-8A581E3383B5}.Release|Win32.ActiveCfg = Release|Win32
+		{A2AF526C-C5DF-9282-DCC4-8A581E3383B5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

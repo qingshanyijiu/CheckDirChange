@@ -8,6 +8,7 @@
 #include <process.h>
 #include <windows.h>
 
+#define POST_READ_LENTH 5
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -103,26 +104,62 @@ void CCheckDirChange::StopCheck()
 	}
 }
 
+void CCheckDirChange::ChangeEventAndChangeInfo(PReadDirChangeInfo pChangeInfos[],HANDLE hWatchEvent[],int length,int FireEventIndexs[],int FireEventNum)
+{
+	HANDLE FireEvents[POST_READ_LENTH] = {0};
+	PReadDirChangeInfo pFireChangeInfos[POST_READ_LENTH] = {0};
+
+	int d=FireEventIndexs[0],s=d+1;
+	if(s<length)
+	{
+		for (int i=0;i<FireEventNum;++i)
+		{
+			int endindex = length;
+			FireEvents[i] = hWatchEvent[FireEventIndexs[i]];
+			pFireChangeInfos[i] = pChangeInfos[FireEventIndexs[i]];
+			if(i+1<FireEventNum)
+				endindex = FireEventIndexs[i+1];
+			for (int j=FireEventIndexs[i]+1;j<endindex;++j)
+			{
+				pChangeInfos[d] = pChangeInfos[s];
+				hWatchEvent[d++]=hWatchEvent[s++];				
+			}			
+			++s;
+		}
+		for (int i=0;i<FireEventNum;++i)
+		{
+			pChangeInfos[d] = pFireChangeInfos[i];
+			hWatchEvent[d++] = FireEvents[i];
+		}
+	}
+}
+
 UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 {
 	CCheckDirChange*			pThis = (CCheckDirChange*) lpParam;
-	HANDLE						hWaitEvent[2]={0},hWatchEvent[3]={0};
+	HANDLE						hWaitEvent[2]={0},hWatchEvent[POST_READ_LENTH+1]={0};
 	const DWORD					dwMaxBufferLen = 8192;
 	DWORD						dwWait,dwIndex;
-	ReadDirChangeInfo			readDirChangeInfo[2]={0};
-
+	PReadDirChangeInfo			pReadDirChangeInfo[POST_READ_LENTH]={0};
 	hWaitEvent[0] = pThis->m_hBeginWatchEvent;
 	hWaitEvent[1] = pThis->m_hSempEvent[1];
 
-	readDirChangeInfo[0].overlapped.hEvent = ::CreateEvent(NULL,FALSE,FALSE,NULL);
-	readDirChangeInfo[1].overlapped.hEvent = ::CreateEvent(NULL,FALSE,FALSE,NULL);
-	hWatchEvent[0] = readDirChangeInfo[0].overlapped.hEvent;
-	hWatchEvent[1] = readDirChangeInfo[1].overlapped.hEvent;
-	hWatchEvent[2] = pThis->m_hExitWatchEvent;
+	for (int i=0;i<POST_READ_LENTH;++i)
+	{
+		pReadDirChangeInfo[i] = new ReadDirChangeInfo;
+		pReadDirChangeInfo[i]->overlapped.hEvent = ::CreateEvent(NULL,FALSE,FALSE,NULL);
+		hWatchEvent[i] = pReadDirChangeInfo[i]->overlapped.hEvent;
+		pReadDirChangeInfo[i]->dwMaxBufferLen = dwMaxBufferLen;
+		pReadDirChangeInfo[i]->pFileNotification = NULL;
+	}
 
-	readDirChangeInfo[0].dwMaxBufferLen = dwMaxBufferLen;
-	readDirChangeInfo[1].dwMaxBufferLen = dwMaxBufferLen;
+	hWatchEvent[POST_READ_LENTH] = pThis->m_hExitWatchEvent;
 
+	int FireEventNum = 0;
+	int FireEventIndexs[POST_READ_LENTH] = {0};
+	int lastIndex = 0;
+	HANDLE FireEvnets[POST_READ_LENTH] = {0};
+	bool BreakWatch = false;
 	while (1)
 	{
 		dwWait = WaitForMultipleObjects(2,hWaitEvent,FALSE,INFINITE);
@@ -130,25 +167,45 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 		{
 			if (pThis->OpenDirectory())
 			{
-				ResetEvent(readDirChangeInfo[0].overlapped.hEvent);
-				ResetEvent(readDirChangeInfo[1].overlapped.hEvent);
+				for (int i=0;i<POST_READ_LENTH;++i)
+					ResetEvent(pReadDirChangeInfo[i]->overlapped.hEvent);
 
-				if (pThis->WatchDirChanges(&readDirChangeInfo[0])&&pThis->WatchDirChanges(&readDirChangeInfo[1]))
+				if(pThis->WatchDirChanges(pReadDirChangeInfo,POST_READ_LENTH))
 				{
 					while(1)
 					{
-						dwWait = WaitForMultipleObjects(3,hWatchEvent,FALSE,INFINITE);
+						dwWait = WaitForMultipleObjects(POST_READ_LENTH+1,hWatchEvent,FALSE,INFINITE);
 						dwIndex = dwWait - WAIT_OBJECT_0;
-						if (dwIndex<2)
+						FireEventNum = 0;
+						BreakWatch = false;
+						if (dwIndex<POST_READ_LENTH)
 						{
-							pThis->PushFileNotifyInfo(readDirChangeInfo[dwIndex].pFileNotification);
-							pThis->WatchDirChanges(&readDirChangeInfo[dwIndex]);
-
-							if(0==dwIndex&&WAIT_OBJECT_0 == WaitForSingleObject(readDirChangeInfo[1].overlapped.hEvent,0))
+							pThis->PushFileNotifyInfo(pReadDirChangeInfo[dwIndex]->pFileNotification);							
+							pThis->WatchDirChanges(pReadDirChangeInfo[dwIndex]);
+							FireEventIndexs[FireEventNum++] = dwIndex;
+							
+							while(dwIndex<POST_READ_LENTH)
 							{
-								pThis->PushFileNotifyInfo(readDirChangeInfo[1].pFileNotification);
-								pThis->WatchDirChanges(&readDirChangeInfo[1]);
-							}
+								lastIndex = dwIndex;
+								dwWait = WaitForMultipleObjects(POST_READ_LENTH-dwIndex,&(hWatchEvent[dwIndex+1]),FALSE,0);
+								dwIndex = dwWait - WAIT_OBJECT_0;
+								dwIndex +=lastIndex+1;
+								if(dwIndex<POST_READ_LENTH)
+								{
+									pThis->PushFileNotifyInfo(pReadDirChangeInfo[dwIndex]->pFileNotification);							
+									pThis->WatchDirChanges(pReadDirChangeInfo[dwIndex]);
+									FireEventIndexs[FireEventNum++] = dwIndex;
+								}
+								else if(dwIndex == POST_READ_LENTH+1)
+								{
+									BreakWatch = true;
+									break;
+								}
+
+							}		
+							if(BreakWatch)
+								break;			
+							pThis->ChangeEventAndChangeInfo(pReadDirChangeInfo,hWatchEvent,POST_READ_LENTH,FireEventIndexs,FireEventNum);
 						}
 						else
 						{
@@ -157,11 +214,9 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 					}
 				}
 
-				if (readDirChangeInfo[0].pFileNotification)
-					delete [] (char*)readDirChangeInfo[0].pFileNotification;
-				
-				if (readDirChangeInfo[1].pFileNotification)
-					delete [] (char*)readDirChangeInfo[1].pFileNotification;
+				for (int i=0;i<POST_READ_LENTH;++i)
+					if (pReadDirChangeInfo[i]->pFileNotification)
+						delete [] (char*)pReadDirChangeInfo[i]->pFileNotification;
 
 			}
 
@@ -172,12 +227,17 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 			break;
 		}
 	}
-
-	CloseHandle(readDirChangeInfo[0].overlapped.hEvent);
-	CloseHandle(readDirChangeInfo[1].overlapped.hEvent);
+	for (int i=0;i<POST_READ_LENTH;++i)
+	{
+		CloseHandle(pReadDirChangeInfo[i]->overlapped.hEvent);
+		delete pReadDirChangeInfo[i];
+		pReadDirChangeInfo[i] = NULL;
+	}
 
 	return 0;
 }
+
+
 
 bool CCheckDirChange::WatchDirChanges(PReadDirChangeInfo pChangeInfo)
 {
@@ -192,6 +252,26 @@ bool CCheckDirChange::WatchDirChanges(PReadDirChangeInfo pChangeInfo)
 		&pChangeInfo->dwReturnLen,
 		&pChangeInfo->overlapped,
 		NULL)?true:false;
+}
+
+bool CCheckDirChange::WatchDirChanges(PReadDirChangeInfo pChangeInfos[] ,int length)
+{
+	for (int i=0;i<length;++i)
+	{
+		pChangeInfos[i]->pFileNotification = (FILE_NOTIFY_INFORMATION*)(new char[pChangeInfos[i]->dwMaxBufferLen]);
+		memset(pChangeInfos[i]->pFileNotification,0,pChangeInfos[i]->dwMaxBufferLen);
+		bool ret = ReadDirectoryChangesW(m_hDirectory,
+			pChangeInfos[i]->pFileNotification,
+			pChangeInfos[i]->dwMaxBufferLen,
+			TRUE,
+			FILE_NOTIFY_CHANGE_FILE_NAME|FILE_NOTIFY_CHANGE_LAST_WRITE|FILE_NOTIFY_CHANGE_DIR_NAME, 
+			&pChangeInfos[i]->dwReturnLen,
+			&pChangeInfos[i]->overlapped,
+			NULL)?true:false;
+		if(ret == false)
+			return false;
+	}
+	return true;
 }
 
 void CCheckDirChange::PushFileNotifyInfo(PFILE_NOTIFY_INFORMATION pFileNotify)

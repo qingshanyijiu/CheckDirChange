@@ -41,7 +41,9 @@ protected:
 	void AnalyDirChangeEvent(PFILE_NOTIFY_INFORMATION pFileNotify);
 	void CheckAddedFile(PFILE_NOTIFY_INFORMATION pFileNotify);
 	bool WatchDirChanges(PReadDirChangeInfo pChangeInfo);
+	bool WatchDirChanges(PReadDirChangeInfo pChangeInfos[],int length);
 	void PushFileNotifyInfo(PFILE_NOTIFY_INFORMATION pFileNotify);
+	void ChangeEventAndChangeInfo(PReadDirChangeInfo pChangeInfo[],HANDLE hWatchEvent[],int lenght,int FireEventIndexs[],int FireEventNum);
 
 protected:
 	HANDLE							m_hDirectory;
