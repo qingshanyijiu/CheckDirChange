@@ -196,7 +196,7 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 									pThis->WatchDirChanges(pReadDirChangeInfo[dwIndex]);
 									FireEventIndexs[FireEventNum++] = dwIndex;
 								}
-								else if(dwIndex == POST_READ_LENTH+1)
+								else if(dwIndex == POST_READ_LENTH)
 								{
 									BreakWatch = true;
 									break;
