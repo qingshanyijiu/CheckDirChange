@@ -6,24 +6,24 @@
 --------------------Configuration: TestDirChange - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/TestDirChange.res" /d "NDEBUG" /d "_AFXDLL" "F:\MyProject\TestDirChange\TestDirChange\TestDirChange.rc"" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPE705.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Release/TestDirChange.res" /d "NDEBUG" /d "_AFXDLL" "F:\MyProject\TestDirChange\TestDirChange_Fast\TestDirChange.rc"" 
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP172D.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/TestDirChange.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"F:\MyProject\TestDirChange\TestDirChange\ChangeFileManage.cpp"
-"F:\MyProject\TestDirChange\TestDirChange\CheckDirChange.cpp"
-"F:\MyProject\TestDirChange\TestDirChange\CriticalLock.cpp"
-"F:\MyProject\TestDirChange\TestDirChange\TestDirChange.cpp"
-"F:\MyProject\TestDirChange\TestDirChange\TestDirChangeDlg.cpp"
+"F:\MyProject\TestDirChange\TestDirChange_Fast\ChangeFileManage.cpp"
+"F:\MyProject\TestDirChange\TestDirChange_Fast\CheckDirChange.cpp"
+"F:\MyProject\TestDirChange\TestDirChange_Fast\CriticalLock.cpp"
+"F:\MyProject\TestDirChange\TestDirChange_Fast\TestDirChange.cpp"
+"F:\MyProject\TestDirChange\TestDirChange_Fast\TestDirChangeDlg.cpp"
 ]
-Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPE705.tmp" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPE706.tmp" with contents
+Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSP172D.tmp" 
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP172E.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/TestDirChange.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"F:\MyProject\TestDirChange\TestDirChange\StdAfx.cpp"
+"F:\MyProject\TestDirChange\TestDirChange_Fast\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPE706.tmp" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPE707.tmp" with contents
+Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSP172E.tmp" 
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP172F.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:no /pdb:"Release/TestDirChange.pdb" /machine:I386 /out:"Release/TestDirChange.exe" 
 .\Release\ChangeFileManage.obj
@@ -34,7 +34,7 @@ Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPE707.tmp" with con
 .\Release\TestDirChangeDlg.obj
 .\Release\TestDirChange.res
 ]
-Creating command line "link.exe @C:\Users\K1375\AppData\Local\Temp\RSPE707.tmp"
+Creating command line "link.exe @C:\Users\K1375\AppData\Local\Temp\RSP172F.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...

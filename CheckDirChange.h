@@ -14,6 +14,14 @@
 #include <list>
 using namespace std;
 
+typedef struct tagReadDirChangeInfo
+{
+	DWORD						dwMaxBufferLen;
+	DWORD						dwReturnLen;
+	FILE_NOTIFY_INFORMATION*	pFileNotification;
+	OVERLAPPED					overlapped;
+}ReadDirChangeInfo,*PReadDirChangeInfo;
+
 class CCheckDirChange  
 {
 public:
@@ -32,6 +40,8 @@ protected:
 	void CloseDirectory();
 	void AnalyDirChangeEvent(PFILE_NOTIFY_INFORMATION pFileNotify);
 	void CheckAddedFile(PFILE_NOTIFY_INFORMATION pFileNotify);
+	bool WatchDirChanges(PReadDirChangeInfo pChangeInfo);
+	void PushFileNotifyInfo(PFILE_NOTIFY_INFORMATION pFileNotify);
 
 protected:
 	HANDLE							m_hDirectory;
