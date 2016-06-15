@@ -7,7 +7,7 @@
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/TestDirChange.res" /d "NDEBUG" /d "_AFXDLL" "F:\MyProject\TestDirChange\TestDirChange_Fast\TestDirChange.rc"" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP172D.tmp" with contents
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPEC9E.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/TestDirChange.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "F:\MyProject\TestDirChange\TestDirChange_Fast\ChangeFileManage.cpp"
@@ -16,14 +16,14 @@ Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP172D.tmp" with con
 "F:\MyProject\TestDirChange\TestDirChange_Fast\TestDirChange.cpp"
 "F:\MyProject\TestDirChange\TestDirChange_Fast\TestDirChangeDlg.cpp"
 ]
-Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSP172D.tmp" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP172E.tmp" with contents
+Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPEC9E.tmp" 
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPECAE.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/TestDirChange.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "F:\MyProject\TestDirChange\TestDirChange_Fast\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSP172E.tmp" 
-Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP172F.tmp" with contents
+Creating command line "cl.exe @C:\Users\K1375\AppData\Local\Temp\RSPECAE.tmp" 
+Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSPECAF.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:no /pdb:"Release/TestDirChange.pdb" /machine:I386 /out:"Release/TestDirChange.exe" 
 .\Release\ChangeFileManage.obj
@@ -34,7 +34,7 @@ Creating temporary file "C:\Users\K1375\AppData\Local\Temp\RSP172F.tmp" with con
 .\Release\TestDirChangeDlg.obj
 .\Release\TestDirChange.res
 ]
-Creating command line "link.exe @C:\Users\K1375\AppData\Local\Temp\RSP172F.tmp"
+Creating command line "link.exe @C:\Users\K1375\AppData\Local\Temp\RSPECAF.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...

@@ -110,6 +110,8 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 	const DWORD					dwMaxBufferLen = 8192;
 	DWORD						dwWait,dwIndex;
 	ReadDirChangeInfo			readDirChangeInfo[2]={0};
+	PReadDirChangeInfo			pDirChangeInfo[2] = {0},pTempChangeInfo;
+	HANDLE						hTempEvent;
 
 	hWaitEvent[0] = pThis->m_hBeginWatchEvent;
 	hWaitEvent[1] = pThis->m_hSempEvent[1];
@@ -135,19 +137,35 @@ UINT __stdcall CCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 
 				if (pThis->WatchDirChanges(&readDirChangeInfo[0])&&pThis->WatchDirChanges(&readDirChangeInfo[1]))
 				{
+					pDirChangeInfo[0] = &readDirChangeInfo[0];
+					pDirChangeInfo[1] = &readDirChangeInfo[1];
+
 					while(1)
 					{
 						dwWait = WaitForMultipleObjects(3,hWatchEvent,FALSE,INFINITE);
 						dwIndex = dwWait - WAIT_OBJECT_0;
 						if (dwIndex<2)
 						{
-							pThis->PushFileNotifyInfo(readDirChangeInfo[dwIndex].pFileNotification);
-							pThis->WatchDirChanges(&readDirChangeInfo[dwIndex]);
+							pThis->PushFileNotifyInfo(pDirChangeInfo[dwIndex]->pFileNotification);
+							pThis->WatchDirChanges(pDirChangeInfo[dwIndex]);
 
-							if(0==dwIndex&&WAIT_OBJECT_0 == WaitForSingleObject(readDirChangeInfo[1].overlapped.hEvent,0))
+							if(0==dwIndex)
 							{
-								pThis->PushFileNotifyInfo(readDirChangeInfo[1].pFileNotification);
-								pThis->WatchDirChanges(&readDirChangeInfo[1]);
+								if (WAIT_OBJECT_0 == WaitForSingleObject(pDirChangeInfo[1]->overlapped.hEvent,0))
+								{
+									pThis->PushFileNotifyInfo(pDirChangeInfo[1]->pFileNotification);
+									pThis->WatchDirChanges(pDirChangeInfo[1]);
+								}
+								else
+								{
+									pTempChangeInfo = pDirChangeInfo[0];
+									pDirChangeInfo[0] = pDirChangeInfo[1];
+									pDirChangeInfo[1] = pTempChangeInfo;
+
+									hTempEvent = hWatchEvent[0];
+									hWatchEvent[0] = hWatchEvent[1];
+									hWatchEvent[1] = hTempEvent;
+								}
 							}
 						}
 						else
