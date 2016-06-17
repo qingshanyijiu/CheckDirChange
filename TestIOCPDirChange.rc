@@ -50,7 +50,7 @@ BEGIN
     "LANGUAGE 4, 2\r\n"
     "#pragma code_page(936)\r\n"
     "#endif //_WIN32\r\n"
-    "#include ""res\\TestDirChange.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""res\\TestIOCPDirChange.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
     "#endif\r\n"
     "\0"
@@ -66,7 +66,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\TestDirChange.ico"
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\TestIOCPDirChange.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -75,20 +75,20 @@ IDR_MAINFRAME           ICON    DISCARDABLE     "res\\TestDirChange.ico"
 
 IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "关于 TestDirChange"
+CAPTION "关于 TestIOCPDirChange"
 FONT 9, "宋体"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "TestDirChange 1.0 版",IDC_STATIC,40,10,119,8,
+    LTEXT           "TestIOCPDirChange 1.0 版",IDC_STATIC,40,10,119,8,
                     SS_NOPREFIX
     LTEXT           "版权所有 (C) 2016",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
 END
 
-IDD_TESTDIRCHANGE_DIALOG DIALOGEX 0, 0, 341, 217
+IDD_TestIOCPDirChange_DIALOG DIALOGEX 0, 0, 341, 217
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "TestDirChange"
+CAPTION "TestIOCPDirChange"
 FONT 9, "宋体"
 BEGIN
     LTEXT           "监听路径:",IDC_STATIC,25,22,37,8
@@ -127,13 +127,13 @@ BEGIN
         BLOCK "080404B0"
         BEGIN
             VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "TestDirChange Microsoft 基础类应用程序\0"
+            VALUE "FileDescription", "TestIOCPDirChange Microsoft 基础类应用程序\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "TestDirChange\0"
+            VALUE "InternalName", "TestIOCPDirChange\0"
             VALUE "LegalCopyright", "版权所有 (C) 2016\0"
             VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "TestDirChange.EXE\0"
-            VALUE "ProductName", "TestDirChange 应用程序\0"
+            VALUE "OriginalFilename", "TestIOCPDirChange.EXE\0"
+            VALUE "ProductName", "TestIOCPDirChange 应用程序\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"
         END
     END
@@ -162,7 +162,7 @@ BEGIN
         BOTTOMMARGIN, 48
     END
 
-    IDD_TESTDIRCHANGE_DIALOG, DIALOG
+    IDD_TestIOCPDirChange_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 334
@@ -180,7 +180,7 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_ABOUTBOX            "关于 TestDirChange(&A)..."
+    IDS_ABOUTBOX            "关于 TestIOCPDirChange(&A)..."
 END
 
 #endif    // Chinese (P.R.C.) resources
@@ -203,7 +203,7 @@ END
 LANGUAGE 4, 2
 #pragma code_page(936)
 #endif //_WIN32
-#include "res\TestDirChange.rc2"  // non-Microsoft Visual C++ edited resources
+#include "res\TestIOCPDirChange.rc2"  // non-Microsoft Visual C++ edited resources
 #include "l.chs\afxres.rc"          // Standard components
 #endif
 

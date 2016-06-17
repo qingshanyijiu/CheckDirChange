@@ -1,46 +1,46 @@
 ========================================================================
-       MICROSOFT FOUNDATION CLASS LIBRARY : TestDirChange
+       MICROSOFT FOUNDATION CLASS LIBRARY : TestIOCPDirChange
 ========================================================================
 
 
-AppWizard has created this TestDirChange application for you.  This application
+AppWizard has created this TestIOCPDirChange application for you.  This application
 not only demonstrates the basics of using the Microsoft Foundation classes
 but is also a starting point for writing your application.
 
 This file contains a summary of what you will find in each of the files that
-make up your TestDirChange application.
+make up your TestIOCPDirChange application.
 
-TestDirChange.dsp
+TestIOCPDirChange.dsp
     This file (the project file) contains information at the project level and
     is used to build a single project or subproject. Other users can share the
     project (.dsp) file, but they should export the makefiles locally.
 
-TestDirChange.h
+TestIOCPDirChange.h
     This is the main header file for the application.  It includes other
     project specific headers (including Resource.h) and declares the
-    CTestDirChangeApp application class.
+    CTestIOCPDirChangeApp application class.
 
-TestDirChange.cpp
+TestIOCPDirChange.cpp
     This is the main application source file that contains the application
-    class CTestDirChangeApp.
+    class CTestIOCPDirChangeApp.
 
-TestDirChange.rc
+TestIOCPDirChange.rc
     This is a listing of all of the Microsoft Windows resources that the
     program uses.  It includes the icons, bitmaps, and cursors that are stored
     in the RES subdirectory.  This file can be directly edited in Microsoft
 	Visual C++.
 
-TestDirChange.clw
+TestIOCPDirChange.clw
     This file contains information used by ClassWizard to edit existing
     classes or add new classes.  ClassWizard also uses this file to store
     information needed to create and edit message maps and dialog data
     maps and to create prototype member functions.
 
-res\TestDirChange.ico
+res\TestIOCPDirChange.ico
     This is an icon file, which is used as the application's icon.  This
-    icon is included by the main resource file TestDirChange.rc.
+    icon is included by the main resource file TestIOCPDirChange.rc.
 
-res\TestDirChange.rc2
+res\TestIOCPDirChange.rc2
     This file contains resources that are not edited by Microsoft 
 	Visual C++.  You should place all resources not editable by
 	the resource editor in this file.
@@ -52,10 +52,10 @@ res\TestDirChange.rc2
 
 AppWizard creates one dialog class:
 
-TestDirChangeDlg.h, TestDirChangeDlg.cpp - the dialog
-    These files contain your CTestDirChangeDlg class.  This class defines
+TestIOCPDirChangeDlg.h, TestIOCPDirChangeDlg.cpp - the dialog
+    These files contain your CTestIOCPDirChangeDlg class.  This class defines
     the behavior of your application's main dialog.  The dialog's
-    template is in TestDirChange.rc, which can be edited in Microsoft
+    template is in TestIOCPDirChange.rc, which can be edited in Microsoft
 	Visual C++.
 
 
@@ -64,7 +64,7 @@ Other standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
-    named TestDirChange.pch and a precompiled types file named StdAfx.obj.
+    named TestIOCPDirChange.pch and a precompiled types file named StdAfx.obj.
 
 Resource.h
     This is the standard header file, which defines new resource IDs.

@@ -1,8 +1,8 @@
-// TestDirChange.h : main header file for the TESTDIRCHANGE application
+// TestIOCPDirChange.h : main header file for the TestIOCPDirChange application
 //
 
-#if !defined(AFX_TESTDIRCHANGE_H__911D8578_C594_4275_8B2E_237E65C6E60C__INCLUDED_)
-#define AFX_TESTDIRCHANGE_H__911D8578_C594_4275_8B2E_237E65C6E60C__INCLUDED_
+#if !defined(AFX_TestIOCPDirChange_H__911D8578_C594_4275_8B2E_237E65C6E60C__INCLUDED_)
+#define AFX_TestIOCPDirChange_H__911D8578_C594_4275_8B2E_237E65C6E60C__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
@@ -15,25 +15,25 @@
 #include "resource.h"		// main symbols
 
 /////////////////////////////////////////////////////////////////////////////
-// CTestDirChangeApp:
-// See TestDirChange.cpp for the implementation of this class
+// CTestIOCPDirChangeApp:
+// See TestIOCPDirChange.cpp for the implementation of this class
 //
 
-class CTestDirChangeApp : public CWinApp
+class CTestIOCPDirChangeApp : public CWinApp
 {
 public:
-	CTestDirChangeApp();
+	CTestIOCPDirChangeApp();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CTestDirChangeApp)
+	//{{AFX_VIRTUAL(CTestIOCPDirChangeApp)
 	public:
 	virtual BOOL InitInstance();
 	//}}AFX_VIRTUAL
 
 // Implementation
 
-	//{{AFX_MSG(CTestDirChangeApp)
+	//{{AFX_MSG(CTestIOCPDirChangeApp)
 		// NOTE - the ClassWizard will add and remove member functions here.
 		//    DO NOT EDIT what you see in these blocks of generated code !
 	//}}AFX_MSG
@@ -46,4 +46,4 @@ public:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_TESTDIRCHANGE_H__911D8578_C594_4275_8B2E_237E65C6E60C__INCLUDED_)
+#endif // !defined(AFX_TestIOCPDirChange_H__911D8578_C594_4275_8B2E_237E65C6E60C__INCLUDED_)

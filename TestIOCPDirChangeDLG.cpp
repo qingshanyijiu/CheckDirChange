@@ -1,9 +1,9 @@
-// TestDirChangeDlg.cpp : implementation file
+// TestIOCPDirChangeDlg.cpp : implementation file
 //
 
 #include "stdafx.h"
-#include "TestDirChange.h"
-#include "TestDirChangeDlg.h"
+#include "TestIOCPDirChange.h"
+#include "TestIOCPDirChangeDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -12,7 +12,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-CTestDirChangeDlg*	g_pThis=NULL;
+CTestIOCPDirChangeDlg*	g_pThis=NULL;
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
@@ -60,12 +60,12 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CTestDirChangeDlg dialog
+// CTestIOCPDirChangeDlg dialog
 
-CTestDirChangeDlg::CTestDirChangeDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CTestDirChangeDlg::IDD, pParent)
+CTestIOCPDirChangeDlg::CTestIOCPDirChangeDlg(CWnd* pParent /*=NULL*/)
+	: CDialog(CTestIOCPDirChangeDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CTestDirChangeDlg)
+	//{{AFX_DATA_INIT(CTestIOCPDirChangeDlg)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
@@ -74,16 +74,16 @@ CTestDirChangeDlg::CTestDirChangeDlg(CWnd* pParent /*=NULL*/)
 	g_pThis = this;
 }
 
-void CTestDirChangeDlg::DoDataExchange(CDataExchange* pDX)
+void CTestIOCPDirChangeDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CTestDirChangeDlg)
+	//{{AFX_DATA_MAP(CTestIOCPDirChangeDlg)
 	DDX_Control(pDX, IDC_LIST_Show, m_showList);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CTestDirChangeDlg, CDialog)
-	//{{AFX_MSG_MAP(CTestDirChangeDlg)
+BEGIN_MESSAGE_MAP(CTestIOCPDirChangeDlg, CDialog)
+	//{{AFX_MSG_MAP(CTestIOCPDirChangeDlg)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
@@ -94,9 +94,9 @@ BEGIN_MESSAGE_MAP(CTestDirChangeDlg, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CTestDirChangeDlg message handlers
+// CTestIOCPDirChangeDlg message handlers
 
-BOOL CTestDirChangeDlg::OnInitDialog()
+BOOL CTestIOCPDirChangeDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -147,7 +147,7 @@ BOOL CTestDirChangeDlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-void CTestDirChangeDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CTestIOCPDirChangeDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -164,7 +164,7 @@ void CTestDirChangeDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CTestDirChangeDlg::OnPaint() 
+void CTestIOCPDirChangeDlg::OnPaint() 
 {
 	if (IsIconic())
 	{
@@ -191,12 +191,12 @@ void CTestDirChangeDlg::OnPaint()
 
 // The system calls this to obtain the cursor to display while the user drags
 //  the minimized window.
-HCURSOR CTestDirChangeDlg::OnQueryDragIcon()
+HCURSOR CTestIOCPDirChangeDlg::OnQueryDragIcon()
 {
 	return (HCURSOR) m_hIcon;
 }
 
-void CTestDirChangeDlg::OnBUTTONBegin() 
+void CTestIOCPDirChangeDlg::OnBUTTONBegin() 
 {
 	// TODO: Add your control notification handler code here
 
@@ -208,13 +208,13 @@ void CTestDirChangeDlg::OnBUTTONBegin()
 
 }
 
-void CTestDirChangeDlg::OnBUTTONEnd() 
+void CTestIOCPDirChangeDlg::OnBUTTONEnd() 
 {
 	// TODO: Add your control notification handler code here
 	m_dirChange.StopCheck();
 }
 
-void CTestDirChangeDlg::OnBUTTONSelDir() 
+void CTestIOCPDirChangeDlg::OnBUTTONSelDir() 
 {
 	// TODO: Add your control notification handler code here
 	CString sFolderPath;
@@ -251,12 +251,12 @@ void CTestDirChangeDlg::OnBUTTONSelDir()
 }
 
 
-void CTestDirChangeDlg::InsertItem(int iNum,PFileInfo pInfo)
+void CTestIOCPDirChangeDlg::InsertItem(int iNum,PFileInfo pInfo)
 {
 	g_pThis->AddItem(iNum,pInfo);
 }
 
-void CTestDirChangeDlg::AddItem(int iNum,PFileInfo pInfo)
+void CTestIOCPDirChangeDlg::AddItem(int iNum,PFileInfo pInfo)
 {
 	char csTemp[10] = {0};
 
@@ -283,7 +283,7 @@ void CTestDirChangeDlg::AddItem(int iNum,PFileInfo pInfo)
 	}
 }
 
-void CTestDirChangeDlg::ClearItem()
+void CTestIOCPDirChangeDlg::ClearItem()
 {
 	m_showList.DeleteAllItems();
 }

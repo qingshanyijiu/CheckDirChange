@@ -3,9 +3,9 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "TestDirChange.h"
+#include "TestIOCPDirChange.h"
 #include "ChangeFileManage.h"
-#include "TestDirChangeDlg.h"
+#include "TestIOCPDirChangeDlg.h"
 #include <process.h>
 
 #ifdef _DEBUG
@@ -106,7 +106,7 @@ void CChangeFileManage::DisposeOneMsg()
 	FileInfo&	fileInfo = m_fileNameList.front();
 
 	++m_nFileNum;
-	CTestDirChangeDlg::InsertItem(m_nFileNum,&fileInfo);
+	CTestIOCPDirChangeDlg::InsertItem(m_nFileNum,&fileInfo);
 
 	CCriticalLock::CAutoLock lock(m_csLock);
 	m_fileNameList.pop_front();

@@ -1,11 +1,11 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
-// Used by TestDirChange.rc
+// Used by TestIOCPDirChange.rc
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
-#define IDD_TESTDIRCHANGE_DIALOG        102
+#define IDD_TestIOCPDirChange_DIALOG        102
 #define IDR_MAINFRAME                   128
 #define IDC_EDIT_Path                   1000
 #define IDC_BUTTON_SelDir               1001

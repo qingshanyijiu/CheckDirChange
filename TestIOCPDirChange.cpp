@@ -1,9 +1,9 @@
-// TestDirChange.cpp : Defines the class behaviors for the application.
+// TestIOCPDirChange.cpp : Defines the class behaviors for the application.
 //
 
 #include "stdafx.h"
-#include "TestDirChange.h"
-#include "TestDirChangeDlg.h"
+#include "TestIOCPDirChange.h"
+#include "TestIOCPDirChangeDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -12,10 +12,10 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CTestDirChangeApp
+// CTestIOCPDirChangeApp
 
-BEGIN_MESSAGE_MAP(CTestDirChangeApp, CWinApp)
-	//{{AFX_MSG_MAP(CTestDirChangeApp)
+BEGIN_MESSAGE_MAP(CTestIOCPDirChangeApp, CWinApp)
+	//{{AFX_MSG_MAP(CTestIOCPDirChangeApp)
 		// NOTE - the ClassWizard will add and remove mapping macros here.
 		//    DO NOT EDIT what you see in these blocks of generated code!
 	//}}AFX_MSG
@@ -23,23 +23,23 @@ BEGIN_MESSAGE_MAP(CTestDirChangeApp, CWinApp)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CTestDirChangeApp construction
+// CTestIOCPDirChangeApp construction
 
-CTestDirChangeApp::CTestDirChangeApp()
+CTestIOCPDirChangeApp::CTestIOCPDirChangeApp()
 {
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// The one and only CTestDirChangeApp object
+// The one and only CTestIOCPDirChangeApp object
 
-CTestDirChangeApp theApp;
+CTestIOCPDirChangeApp theApp;
 
 /////////////////////////////////////////////////////////////////////////////
-// CTestDirChangeApp initialization
+// CTestIOCPDirChangeApp initialization
 
-BOOL CTestDirChangeApp::InitInstance()
+BOOL CTestIOCPDirChangeApp::InitInstance()
 {
 	AfxEnableControlContainer();
 
@@ -54,7 +54,7 @@ BOOL CTestDirChangeApp::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-	CTestDirChangeDlg dlg;
+	CTestIOCPDirChangeDlg dlg;
 	m_pMainWnd = &dlg;
 	int nResponse = dlg.DoModal();
 	if (nResponse == IDOK)

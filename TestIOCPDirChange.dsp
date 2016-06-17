@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="TestDirChange" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="TestIOCPDirChange" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=TestDirChange - Win32 Debug
+CFG=TestIOCPDirChange - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "TestDirChange.mak".
+!MESSAGE NMAKE /f "TestIOCPDirChange.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "TestDirChange.mak" CFG="TestDirChange - Win32 Debug"
+!MESSAGE NMAKE /f "TestIOCPDirChange.mak" CFG="TestIOCPDirChange - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TestDirChange - Win32 Release" (based on "Win32 (x86) Application")
-!MESSAGE "TestDirChange - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "TestIOCPDirChange - Win32 Release" (based on "Win32 (x86) Application")
+!MESSAGE "TestIOCPDirChange - Win32 Debug" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "TestDirChange - Win32 Release"
+!IF  "$(CFG)" == "TestIOCPDirChange - Win32 Release"
 
 # PROP BASE Use_MFC 6
 # PROP BASE Use_Debug_Libraries 0
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
 # ADD LINK32 /nologo /subsystem:windows /machine:I386
 
-!ELSEIF  "$(CFG)" == "TestDirChange - Win32 Debug"
+!ELSEIF  "$(CFG)" == "TestIOCPDirChange - Win32 Debug"
 
 # PROP BASE Use_MFC 6
 # PROP BASE Use_Debug_Libraries 1
@@ -66,8 +66,8 @@ LINK32=link.exe
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Yu"stdafx.h" /FD /GZ   /c
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Yu"stdafx.h" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x804 /d "_DEBUG" /d "_AFXDLL"
@@ -83,8 +83,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "TestDirChange - Win32 Release"
-# Name "TestDirChange - Win32 Debug"
+# Name "TestIOCPDirChange - Win32 Release"
+# Name "TestIOCPDirChange - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -94,11 +94,11 @@ SOURCE=.\ChangeFileManage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CheckDirChange.cpp
+SOURCE=.\CriticalLock.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CriticalLock.cpp
+SOURCE=.\IOCPCheckDirChange.cpp
 # End Source File
 # Begin Source File
 
@@ -107,15 +107,15 @@ SOURCE=.\StdAfx.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TestDirChange.cpp
+SOURCE=.\TestIOCPDirChange.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TestDirChange.rc
+SOURCE=.\TestIOCPDirChange.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\TestDirChangeDlg.cpp
+SOURCE=.\TestIOCPDirChangeDlg.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -127,11 +127,15 @@ SOURCE=.\ChangeFileManage.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CheckDirChange.h
+SOURCE=.\CriticalLock.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CriticalLock.h
+SOURCE=.\FastList.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOCPCheckDirChange.h
 # End Source File
 # Begin Source File
 
@@ -143,11 +147,11 @@ SOURCE=.\StdAfx.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TestDirChange.h
+SOURCE=.\TestIOCPDirChange.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TestDirChangeDlg.h
+SOURCE=.\TestIOCPDirChangeDlg.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -155,11 +159,11 @@ SOURCE=.\TestDirChangeDlg.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\res\TestDirChange.ico
+SOURCE=.\res\TestIOCPDirChange.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\TestDirChange.rc2
+SOURCE=.\res\TestIOCPDirChange.rc2
 # End Source File
 # End Group
 # Begin Source File

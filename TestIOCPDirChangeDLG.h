@@ -1,22 +1,22 @@
-// TestDirChangeDlg.h : header file
+// TestIOCPDirChangeDlg.h : header file
 //
 
-#if !defined(AFX_TESTDIRCHANGEDLG_H__0C3E5E7E_CDF1_4D1E_AE4F_415FA719FA16__INCLUDED_)
-#define AFX_TESTDIRCHANGEDLG_H__0C3E5E7E_CDF1_4D1E_AE4F_415FA719FA16__INCLUDED_
+#if !defined(AFX_TestIOCPDirChangeDLG_H__0C3E5E7E_CDF1_4D1E_AE4F_415FA719FA16__INCLUDED_)
+#define AFX_TestIOCPDirChangeDLG_H__0C3E5E7E_CDF1_4D1E_AE4F_415FA719FA16__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-#include "CheckDirChange.h"
+#include "IOCPCheckDirChange.h"
 
 /////////////////////////////////////////////////////////////////////////////
-// CTestDirChangeDlg dialog
+// CTestIOCPDirChangeDlg dialog
 
-class CTestDirChangeDlg : public CDialog
+class CTestIOCPDirChangeDlg : public CDialog
 {
 // Construction
 public:
-	CTestDirChangeDlg(CWnd* pParent = NULL);	// standard constructor
+	CTestIOCPDirChangeDlg(CWnd* pParent = NULL);	// standard constructor
 
 public:
 	static	void InsertItem(int iNum,PFileInfo pInfo);
@@ -26,16 +26,16 @@ protected:
 	void ClearItem();
 	
 protected:
-	CCheckDirChange m_dirChange;
+	CIOCPCheckDirChange m_dirChange;
 
 // Dialog Data
-	//{{AFX_DATA(CTestDirChangeDlg)
-	enum { IDD = IDD_TESTDIRCHANGE_DIALOG };
+	//{{AFX_DATA(CTestIOCPDirChangeDlg)
+	enum { IDD = IDD_TestIOCPDirChange_DIALOG };
 	CListCtrl	m_showList;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CTestDirChangeDlg)
+	//{{AFX_VIRTUAL(CTestIOCPDirChangeDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 	//}}AFX_VIRTUAL
@@ -45,7 +45,7 @@ protected:
 	HICON m_hIcon;
 
 	// Generated message map functions
-	//{{AFX_MSG(CTestDirChangeDlg)
+	//{{AFX_MSG(CTestIOCPDirChangeDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
@@ -60,4 +60,4 @@ protected:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_TESTDIRCHANGEDLG_H__0C3E5E7E_CDF1_4D1E_AE4F_415FA719FA16__INCLUDED_)
+#endif // !defined(AFX_TestIOCPDirChangeDLG_H__0C3E5E7E_CDF1_4D1E_AE4F_415FA719FA16__INCLUDED_)

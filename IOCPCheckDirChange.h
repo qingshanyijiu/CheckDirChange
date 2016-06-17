@@ -11,26 +11,63 @@
 
 #include "ChangeFileManage.h"
 #include "CriticalLock.h"
-#include <list>
+//#include <list>
+#include "FastList.h"
 using namespace std;
 
-typedef struct tagReadDirChangeInfo
-{
-	DWORD						dwMaxBufferLen;
-	DWORD						dwReturnLen;
-	FILE_NOTIFY_INFORMATION*	pFileNotification;
-	OVERLAPPED					overlapped;
-}ReadDirChangeInfo,*PReadDirChangeInfo;
+#define		MAX_FILE_NOTIFY_LEN		(8192)
 
-class CCheckDirChange  
+
+typedef struct tagPER_IO_CONTEXT
+{
+	OVERLAPPED					overlapped;
+	char*						pNotifyBuffer;
+	FILE_NOTIFY_INFORMATION *	pFileNotification;
+	DWORD						dwReturnLen;
+	
+	tagPER_IO_CONTEXT()
+	{
+		memset(&overlapped,0,sizeof(OVERLAPPED));
+		pNotifyBuffer = NULL;
+		pFileNotification = NULL;
+		dwReturnLen = 0;
+	}
+
+	void GetNewFileNotifyBuffer()
+	{
+		pNotifyBuffer = new char[MAX_FILE_NOTIFY_LEN];
+		memset(pNotifyBuffer,0,MAX_FILE_NOTIFY_LEN);
+		pFileNotification = (FILE_NOTIFY_INFORMATION*)pNotifyBuffer;
+		dwReturnLen = 0;
+	}
+
+	
+	void Clear()
+	{
+		if (pNotifyBuffer)
+			delete [] pNotifyBuffer;
+
+		pNotifyBuffer = NULL;
+	}
+	
+}PER_IO_CONTEXT,*PPER_IO_CONTEXT;
+
+
+class CIOCPCheckDirChange  
 {
 public:
-	CCheckDirChange();
-	virtual ~CCheckDirChange();
+	CIOCPCheckDirChange();
+	virtual ~CIOCPCheckDirChange();
 
 	void Init();
 	bool StartCheck(const char* lpDirPath);
 	void StopCheck();
+
+protected:
+	void InitIOCP();
+	void InitDispose();
+	int	 GetNoOfProcessors();
+	bool PostWatchFileChange(PPER_IO_CONTEXT pContext);
 
 protected:
 	static UINT __stdcall NotifiDirChangeThread(LPVOID	lpParam);
@@ -40,20 +77,22 @@ protected:
 	void CloseDirectory();
 	void AnalyDirChangeEvent(PFILE_NOTIFY_INFORMATION pFileNotify);
 	void CheckAddedFile(PFILE_NOTIFY_INFORMATION pFileNotify);
-	bool WatchDirChanges(PReadDirChangeInfo pChangeInfo);
 	void PushFileNotifyInfo(PFILE_NOTIFY_INFORMATION pFileNotify);
 
 protected:
+	HANDLE							m_hIOCompletionPort;           // 完成端口的句柄
 	HANDLE							m_hDirectory;
-	HANDLE							m_hThread[2];
+	HANDLE*							m_phWorkThreads;
+	PPER_IO_CONTEXT					m_pContexts;
+	HANDLE							m_hDisposeThread;
 	HANDLE							m_hSempEvent[2];
-	HANDLE							m_hExitWatchEvent;
-	HANDLE							m_hBeginWatchEvent;
 	char							m_csWatchFilePath[MAX_PATH];
+	int								m_nWorkerCount;
+	int								m_nMaxContextsCount;
 
 protected:
-	list<PFILE_NOTIFY_INFORMATION>	m_notifyInfoList;
-	CCriticalLock					m_listLock;
+	CFastList<PFILE_NOTIFY_INFORMATION>	m_notifyInfoList;
+	//CCriticalLock					m_listLock;
 	CChangeFileManage				m_changeFile;
 
 protected:
