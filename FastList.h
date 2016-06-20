@@ -10,7 +10,7 @@ class CFastList
 public:
 	typedef struct tagNoteInfo
 	{
-		DataType	noteData;
+		DataType		noteData;
 		tagNoteInfo*	pNext;
 		
 		tagNoteInfo()

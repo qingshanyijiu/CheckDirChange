@@ -23,12 +23,19 @@ static char THIS_FILE[]=__FILE__;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
+typedef	struct	tagWorkThreadParam
+{
+	CIOCPCheckDirChange*	pThis;
+	int						index;
+}WorkThreadParam,*PWorkThreadParam;
+
 CIOCPCheckDirChange::CIOCPCheckDirChange()
 {
 	m_hDirectory =  INVALID_HANDLE_VALUE;
 	m_hIOCompletionPort = INVALID_HANDLE_VALUE;
 	m_phWorkThreads = NULL;
-	m_hDisposeThread = NULL;
+	m_hDisposeThread[0] = NULL;
+	m_hDisposeThread[1] = NULL;
 	m_pContexts = NULL;
 	m_nMaxContextsCount = 0;
 	m_nWorkerCount = 0;
@@ -49,15 +56,16 @@ void CIOCPCheckDirChange::Init()
 {
 	m_changeFile.Init();
 
-	InitDispose();
 	InitIOCP();
+	InitDispose();
+
 }
 
 void CIOCPCheckDirChange::UnInit()
-{
+{	
+	int i;
 	if (INVALID_HANDLE_VALUE != m_hIOCompletionPort)
 	{
-		int i;
 		for (i=0;i<m_nWorkerCount;++i)
 			PostQueuedCompletionStatus(m_hIOCompletionPort,0,DWORD(EXIT_CODE),NULL);
 		WaitForMultipleObjects(m_nWorkerCount,m_phWorkThreads,TRUE,m_nWorkerCount*1000);
@@ -69,14 +77,21 @@ void CIOCPCheckDirChange::UnInit()
 		delete [] m_pContexts;
 	}
 
-	if (m_hDisposeThread)
+	if (m_hDisposeThread[0])
 	{
 		SetEvent(m_hSempEvent[1]);
-		if(WAIT_TIMEOUT == WaitForSingleObject(m_hDisposeThread,1000))
-			TerminateThread(m_hDisposeThread,0);
-		
-		CloseHandle(m_hDisposeThread);
-		m_hDisposeThread = NULL;
+		WaitForMultipleObjects(2,m_hDisposeThread,TRUE,2000);
+	
+		CloseHandle(m_hDisposeThread[0]);
+		m_hDisposeThread[0] = NULL;
+
+		CloseHandle(m_hDisposeThread[1]);
+		m_hDisposeThread[1] = NULL;
+
+		for (i=0;i<m_nWorkerCount;++i)
+			CloseHandle(m_hCacheSempEvents[i]);
+		delete [] m_hCacheSempEvents;
+		delete [] m_pCacheNotifyList;
 
 		CloseHandle(m_hSempEvent[0]);
 		CloseHandle(m_hSempEvent[1]);
@@ -97,19 +112,37 @@ void CIOCPCheckDirChange::InitIOCP()
 		m_pContexts = new PER_IO_CONTEXT[m_nMaxContextsCount];
 		m_phWorkThreads = new HANDLE[m_nWorkerCount];
 
+		PWorkThreadParam pParam = NULL;
 		for (int i=0;i<m_nWorkerCount;++i)
-			m_phWorkThreads[i] = (HANDLE)_beginthreadex(NULL,0,NotifiDirChangeThread,this,0,NULL); 
+		{
+			pParam  =new WorkThreadParam;
+			pParam->index = i;
+			pParam->pThis = this;
+			m_phWorkThreads[i] = (HANDLE)_beginthreadex(NULL,0,NotifiDirChangeThread,pParam,0,NULL); 
+		}
 	}
 }
 
 void CIOCPCheckDirChange::InitDispose()
 {
-	if (NULL == m_hDisposeThread)
+	if (NULL == m_hDisposeThread[0])
 	{
 		m_hSempEvent[0] = ::CreateSemaphore(NULL,0,0x7FFFFF,NULL);
 		m_hSempEvent[1] = ::CreateEvent(NULL,TRUE,FALSE,NULL);	
 		
-		m_hDisposeThread = (HANDLE)_beginthreadex(NULL,0,AnalyDirChangeThread,this,0,NULL);
+		m_hDisposeThread[0] = (HANDLE)_beginthreadex(NULL,0,AnalyDirChangeThread,this,0,NULL);
+	}
+
+	if (NULL == m_hDisposeThread[1])
+	{
+		m_hCacheSempEvents = new HANDLE[m_nWorkerCount+1];
+		m_hCacheSempEvents[m_nWorkerCount] = m_hSempEvent[1];
+		for (int i=0;i<m_nWorkerCount;++i)
+			m_hCacheSempEvents[i] = ::CreateSemaphore(NULL,0,0x7FFFFF,NULL);
+
+		m_pCacheNotifyList = new CFastList<PFILE_NOTIFY_INFORMATION>[m_nWorkerCount];
+
+		m_hDisposeThread[1] = (HANDLE)_beginthreadex(NULL,0,CacheDirChangeThread,this,0,NULL);
 	}
 }
 
@@ -166,7 +199,7 @@ void CIOCPCheckDirChange::StopCheck()
 
 UINT __stdcall CIOCPCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 {
-	CIOCPCheckDirChange*	pThis = (CIOCPCheckDirChange*) lpParam;
+	PWorkThreadParam		pWorkParam = (PWorkThreadParam) lpParam;
 	OVERLAPPED*				pOverlapped = NULL;
 	DWORD					dwBytesTransfered = 0;
 	HANDLE					hKey = NULL;
@@ -176,7 +209,7 @@ UINT __stdcall CIOCPCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 
 	while (1)
 	{
-		bReturn = GetQueuedCompletionStatus(pThis->m_hIOCompletionPort,
+		bReturn = GetQueuedCompletionStatus(pWorkParam->pThis->m_hIOCompletionPort,
 											&dwBytesTransfered,
 											(ULONG*)&hKey,
 											&pOverlapped,
@@ -195,8 +228,8 @@ UINT __stdcall CIOCPCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 			pIoContext = CONTAINING_RECORD(pOverlapped, PER_IO_CONTEXT, overlapped);
 			if (dwBytesTransfered)		
 			{
-				pThis->PushFileNotifyInfo(pIoContext->pFileNotification);
-				pThis->PostWatchFileChange(pIoContext);
+				pWorkParam->pThis->PushFileNotifyInfoToCache(pIoContext->pFileNotification,pWorkParam->index);
+				pWorkParam->pThis->PostWatchFileChange(pIoContext);
 			}
 			else	//CloseDir
 			{
@@ -204,17 +237,73 @@ UINT __stdcall CIOCPCheckDirChange::NotifiDirChangeThread(LPVOID	lpParam)
 			}
 		}
 	}
+
+	delete pWorkParam;
+
+	return 0;
+}
+
+void CIOCPCheckDirChange::PushFileNotifyInfoToCache(PFILE_NOTIFY_INFORMATION pFileNotify,int index)
+{
+	m_pCacheNotifyList[index].PushBack(pFileNotify);
+	ReleaseSemaphore(m_hCacheSempEvents[index],1,NULL);
+}
+
+void CIOCPCheckDirChange::PullFileNotifyInfoFromCache(int index)
+{
+	PushFileNotifyInfo(m_pCacheNotifyList[index].Front());
+	m_pCacheNotifyList[index].PopFront();
+}
+
+UINT __stdcall CIOCPCheckDirChange::CacheDirChangeThread(LPVOID	lpParam)
+{
+	CIOCPCheckDirChange* pThis = (CIOCPCheckDirChange*)lpParam;
+	DWORD dwWait;
+	int index=0,nMaxCount = pThis->m_nWorkerCount+1;
+
+	while(true)
+	{
+		dwWait = ::WaitForMultipleObjects(nMaxCount, pThis->m_hCacheSempEvents, FALSE, INFINITE);//等待所有的信号
+		index = dwWait - WAIT_OBJECT_0;
+		if (index<nMaxCount)
+		{
+			if (pThis->m_nWorkerCount == index)
+				return 1;
+			else
+			{
+				pThis->PullFileNotifyInfoFromCache(index);
+				index++;
+				while (index<nMaxCount)	//缩小范围，检查信号
+				{
+					dwWait = ::WaitForMultipleObjects(nMaxCount-index, &(pThis->m_hCacheSempEvents[index]), FALSE, 0);	
+					index += dwWait - WAIT_OBJECT_0;
+					if (index<nMaxCount)
+					{
+						if (pThis->m_nWorkerCount == index)
+							return 1;
+						else
+							pThis->PullFileNotifyInfoFromCache(index);
+						index++;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+
 	return 0;
 }
 
 void CIOCPCheckDirChange::PushFileNotifyInfo(PFILE_NOTIFY_INFORMATION pFileNotify)
 {
-// 	m_listLock.Lock();
-// 	m_notifyInfoList.push_back(pFileNotify);
-// 	m_listLock.Unlock();
-
 	m_notifyInfoList.PushBack(pFileNotify);
-	
 	ReleaseSemaphore(m_hSempEvent[0],1,NULL);
 }
 
@@ -231,9 +320,6 @@ UINT __stdcall CIOCPCheckDirChange::AnalyDirChangeThread(LPVOID	lpParam)
 			pThis->AnalyDirChangeEvent(pNotify);
 			delete [] ((char*)pNotify);
 
-// 			pThis->m_listLock.Lock();
-// 			pThis->m_notifyInfoList.pop_front();
-// 			pThis->m_listLock.Unlock();
 			pThis->m_notifyInfoList.PopFront();
 		}
 		else if ((WAIT_OBJECT_0+1) == dwWait)

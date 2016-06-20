@@ -71,33 +71,39 @@ protected:
 
 protected:
 	static UINT __stdcall NotifiDirChangeThread(LPVOID	lpParam);
+	static UINT __stdcall CacheDirChangeThread(LPVOID	lpParam);
 	static UINT __stdcall AnalyDirChangeThread(LPVOID	lpParam);
 	void UnInit();
 	bool OpenDirectory();
 	void CloseDirectory();
 	void AnalyDirChangeEvent(PFILE_NOTIFY_INFORMATION pFileNotify);
 	void CheckAddedFile(PFILE_NOTIFY_INFORMATION pFileNotify);
+	void PushFileNotifyInfoToCache(PFILE_NOTIFY_INFORMATION pFileNotify,int index);
+	void PullFileNotifyInfoFromCache(int index);
 	void PushFileNotifyInfo(PFILE_NOTIFY_INFORMATION pFileNotify);
 
 protected:
-	HANDLE							m_hIOCompletionPort;           // 完成端口的句柄
-	HANDLE							m_hDirectory;
-	HANDLE*							m_phWorkThreads;
-	PPER_IO_CONTEXT					m_pContexts;
-	HANDLE							m_hDisposeThread;
-	HANDLE							m_hSempEvent[2];
-	char							m_csWatchFilePath[MAX_PATH];
-	int								m_nWorkerCount;
-	int								m_nMaxContextsCount;
+	HANDLE									m_hIOCompletionPort;           // 完成端口的句柄
+	HANDLE									m_hDirectory;
+	HANDLE*									m_phWorkThreads;
+	PPER_IO_CONTEXT							m_pContexts;
+	HANDLE									m_hDisposeThread[2];
+	HANDLE									m_hSempEvent[2];
+	char									m_csWatchFilePath[MAX_PATH];
+	int										m_nWorkerCount;
+	int										m_nMaxContextsCount;
 
 protected:
-	CFastList<PFILE_NOTIFY_INFORMATION>	m_notifyInfoList;
-	//CCriticalLock					m_listLock;
-	CChangeFileManage				m_changeFile;
+	HANDLE*									m_hCacheSempEvents;
+	CFastList<PFILE_NOTIFY_INFORMATION>*	m_pCacheNotifyList;	 
 
 protected:
-	char							m_csFileFullNames[MAX_PATH];
-	TCHAR							m_szFileName[MAX_PATH];
+	CFastList<PFILE_NOTIFY_INFORMATION>		m_notifyInfoList;
+	CChangeFileManage						m_changeFile;
+
+protected:
+	char									m_csFileFullNames[MAX_PATH];
+	TCHAR									m_szFileName[MAX_PATH];
 };
 
 #endif // !defined(AFX_CHECKDIRCHANGE_H__2F84F82F_A635_4A40_8F7C_F6B5999D36B0__INCLUDED_)
